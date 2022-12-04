@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe Minimax </title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="app.js" defer></script>
+</head>
+
+<body>
+
+    <!-- Game Board -->
+    <div class="flex flex-col items-center justify-center p-20">
+        <h1 class="text-4xl font-bold">Tic Tac Toe</h1>
+        <div class="grid grid-cols-3 gap-4 mt-4">
+            <button class="box flex flex-col items-center justify-center w-20 h-20 border-2 border-black"
+                id="box0"></button>
+            <button class="box flex flex-col items-center justify-center w-20 h-20 border-2 border-black"
+                id="box1"></button>
+            <button class="box flex flex-col items-center justify-center w-20 h-20 border-2 border-black"
+                id="box2"></button>
+            <button class="box flex flex-col items-center justify-center w-20 h-20 border-2 border-black"
+                id="box3"></button>
+            <button class="box flex flex-col items-center justify-center w-20 h-20 border-2 border-black"
+                id="box4"></button>
+            <button class="box flex flex-col items-center justify-center w-20 h-20 border-2 border-black"
+                id="box5"></button>
+            <button class="box flex flex-col items-center justify-center w-20 h-20 border-2 border-black"
+                id="box6"></button>
+            <button class="box flex flex-col items-center justify-center w-20 h-20 border-2 border-black"
+                id="box7"></button>
+            <button class="box flex flex-col items-center justify-center w-20 h-20 border-2 border-black"
+                id="box8"></button>
+        </div>
+    </div>
+
+    <!-- Result -->
+    <div class="flex flex-col items-center justify-center">
+        <h1 class="text-4xl font-bold" id="result"></h1>
+        <button class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md" id="restart">Restart</button>
+    </div>
+
+</body>
+
+</html>
