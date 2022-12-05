@@ -1,8 +1,6 @@
 
 import random
 
-buttons = []
-
 
 def inputPlayerLetter():
     letter = ''
