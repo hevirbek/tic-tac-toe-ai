@@ -1,8 +1,19 @@
 
 import random
-import streamlit as st
 
 buttons = []
+
+
+def inputPlayerLetter():
+    letter = ''
+    while not (letter == 'X' or letter == 'O'):
+        print('Do you want to be X or O?')
+        letter = input().upper()
+
+    if letter == 'X':
+        return ['X', 'O']
+    else:
+        return ['O', 'X']
 
 
 def whoGoesFirst():
@@ -14,9 +25,6 @@ def whoGoesFirst():
 
 def makeMove(board, letter, move):
     board[move] = letter
-    # change the button text
-    if move in st.session_state:
-        btn = st.button(letter, key=move)
 
 
 def isWinner(bo, le):
@@ -86,24 +94,88 @@ def isBoardFull(board):
     return True
 
 
-st.title('Tic Tac Toe')
-st.write('Welcome to Tic Tac Toe!')
+def getBoardCopy(board):
+    dupeBoard = []
 
-# Reset the board
-theBoard = [' '] * 10
-# add 2 radio for choosing the letter
-playerLetter, computerLetter = st.columns(2)
-with playerLetter:
-    letter = st.radio('Do you want to be X or O?', ('X', 'O'))
-with computerLetter:
-    if letter == 'X':
-        computerLetter = 'O'
-    else:
-        computerLetter = 'X'
+    for i in board:
+        dupeBoard.append(i)
 
-turn = whoGoesFirst()
-st.write('The ' + turn + ' will go first.')
+    return dupeBoard
 
-for i in range(1, 10):
-    buttons.append(st.button(
-        theBoard[i], key=i, on_click=lambda i=i: makeMove(theBoard, letter, i)))
+
+def getPlayerMove(board):
+    move = ' '
+    while move not in '1 2 3 4 5 6 7 8 9'.split() or not isSpaceFree(board, int(move)):
+        print('What is your next move? (1-9)')
+        move = input()
+    return int(move)
+
+
+def printBoard(board):
+    # "board" is a list of 10 strings representing the board (ignore index 0)
+    print(' ' + board[1] + ' | ' + board[2] + ' | ' + board[3])
+    print('-----------')
+    print(' ' + board[4] + ' | ' + board[5] + ' | ' + board[6])
+    print('-----------')
+    print(' ' + board[7] + ' | ' + board[8] + ' | ' + board[9])
+
+
+def playAgain():
+    # This function returns True if the player wants to play again, otherwise it returns False.
+    print('Do you want to play again? (yes or no)')
+    return input().lower().startswith('y')
+
+
+def main():
+    print('Welcome to Tic Tac Toe!')
+
+    while True:
+        # Reset the board
+        theBoard = [' '] * 10
+        playerLetter, computerLetter = inputPlayerLetter()
+        turn = whoGoesFirst()
+        print('The ' + turn + ' will go first.')
+        gameIsPlaying = True
+
+        while gameIsPlaying:
+            if turn == 'player':
+                # Player's turn.
+                printBoard(theBoard)
+                move = getPlayerMove(theBoard)
+                makeMove(theBoard, playerLetter, move)
+
+                if isWinner(theBoard, playerLetter):
+                    printBoard(theBoard)
+                    print('Hooray! You have won the game!')
+                    gameIsPlaying = False
+                else:
+                    if isBoardFull(theBoard):
+                        printBoard(theBoard)
+                        print('The game is a tie!')
+                        break
+                    else:
+                        turn = 'computer'
+
+            else:
+                # Computer's turn.
+                move = getComputerMove(theBoard, computerLetter, playerLetter)
+                makeMove(theBoard, computerLetter, move)
+
+                if isWinner(theBoard, computerLetter):
+                    printBoard(theBoard)
+                    print('The computer has beaten you! You lose.')
+                    gameIsPlaying = False
+                else:
+                    if isBoardFull(theBoard):
+                        printBoard(theBoard)
+                        print('The game is a tie!')
+                        break
+                    else:
+                        turn = 'player'
+
+        if not playAgain():
+            break
+
+
+if __name__ == '__main__':
+    main()
